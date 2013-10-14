@@ -14,7 +14,9 @@ struct subArrIndices
 	int end;
 };
 
-int computeSum(int arr[], struct subArrIndices subArrIndices);
+void closeToZero1(int arr[]);
+void closeToZero2(int arr[]);
+
 
 int main(int argc, const char * argv[])
 {
@@ -25,7 +27,11 @@ int main(int argc, const char * argv[])
 		-297,-662,-135,220,-267,773,117,669,905,152,-789,-243,-901,-241,-223,380,668,-514,-916,723,957,-222,605,-371
 	};
 
-	int total;
+	closeToZero1(arr);
+}
+
+void closeToZero1(int arr[])
+{
 	int bestTotal = INT_MAX;
 	struct subArrIndices indices;
 	struct subArrIndices bestTotalIndices;
@@ -36,7 +42,13 @@ int main(int argc, const char * argv[])
 		{
 			indices.start = i;
 			indices.end = j;
-			total = computeSum(arr, indices);
+
+			int total = 0;
+			for (int i = indices.start; i <= indices.end; i++)
+			{
+				total += arr[i];
+			}
+
 			if (abs(total) < abs(bestTotal))
 			{
 				bestTotal = total;
@@ -45,17 +57,15 @@ int main(int argc, const char * argv[])
 		}
 	}
 
-    return 0;
+	printf("Best subarray total found: %i\n", bestTotal);
+	printf("Best subarray indices: %i, %i\n", bestTotalIndices.start, bestTotalIndices.end);
+	printf("Values at those indices: %i, %i\n", arr[bestTotalIndices.start], arr[bestTotalIndices.end]);
 }
 
-
-int computeSum(int arr[], struct subArrIndices subArrIndices)
+void closeToZero2(int arr[])
 {
-	int sum = 0;
-	for (int i = subArrIndices.start; i < subArrIndices.end - 1; i++)
-	{
-		sum += arr[i];
-	}
 
-	return sum;
+
 }
+
+
