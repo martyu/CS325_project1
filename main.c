@@ -15,43 +15,53 @@ struct subArrIndices
 	int end;
 };
 
-void closeToZero1(int arr[]);
-void closeToZero2(int arr[]);
+struct subArrIndices closeToZero1(int arr[]);
+struct subArrIndices closeToZero2(int arr[]);
+void printSubArray(struct subArrIndices indices, int array[]);
 
 
 int main(int argc, const char * argv[])
 {
 	int arr[] = {
-		-360,948,-29,-447,515,-53,-491,-761,-719,-854,-77,-677,473,262,-95,844,-84,-875,241,-320,143,888,-524,-947,-652,
-		260,503,882,-692,223,745,-245,37,-387,602,862,125,653,938,635,-960,-375,555,-730,-198,-691,-74,336,112,62,-319,
-		-877,-416,-646,-207,616,608,737,-143,-747,-387,788,105,258,408,517,451,-718,358,118,-738,72,-457,-551,-726,580,
-		-297,-662,-135,220,-267,773,117,669,905,152,-789,-243,-901,-241,-223,380,668,-514,-916,723,957,-222,605,-371,
+		536,565,-319,653,667,67,-331,297,-688,963,730,-725,298,21,797,557,286,-641,-290,-151,271,-534,730,865,986,-4,-984,762,-792,-450,428,-753,49,245,-141,-710,325,-862,294,-859,517,-911,-671,223,-577,778,916,-871,-835,541,986,593,-913,-357,-358,478,616,958,-440,-75,155,645,508,-29,-715,-275,633,-790,-441,6,98,-232,-78,-941,-67,-29,539,-791,702,-81,-477,-481,978,901,-784,563,-589,-712,-860,373,872,-315,-13,-691,-953,-602,380,834,-734,-778
 	};
 
 	clock_t startTime;
 	clock_t endTime;
 	double runTime;
+	struct subArrIndices closeToZeroIndices;
+
+
+	// Algorithm 1
 
 	startTime = clock();
-	closeToZero1(arr);
+	closeToZeroIndices = closeToZero1(arr);
 	endTime = clock();
 
 	runTime = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
 
 	printf("Run time of algorithm 1: %lf\n", runTime);
 
+	printSubArray(closeToZeroIndices, arr);
+
+
+	// Algorithm 2
+
 	startTime = clock();
-	closeToZero2(arr);
+	closeToZeroIndices = closeToZero2(arr);
 	endTime = clock();
 
 	runTime = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
 
 	printf("Run time of algorithm 2: %lf\n", runTime);
 
+	printSubArray(closeToZeroIndices, arr);
+
+
 	return 0;
 }
 
-void closeToZero1(int arr[])
+struct subArrIndices closeToZero1(int arr[])
 {
 	int bestTotal = INT_MAX;
 	struct subArrIndices indices;
@@ -87,9 +97,11 @@ end_loop:
 	printf("Best subarray total found: %i\n", bestTotal);
 	printf("Best subarray indices: %i, %i\n", bestTotalIndices.start, bestTotalIndices.end);
 	printf("Values at those indices: %i, %i\n", arr[bestTotalIndices.start], arr[bestTotalIndices.end]);
+
+	return bestTotalIndices;
 }
 
-void closeToZero2(int arr[])
+struct subArrIndices closeToZero2(int arr[])
 {
 	int bestTotal = INT_MAX;
 	struct subArrIndices bestTotalIndices;
@@ -122,6 +134,18 @@ end_loop:
 	printf("Best subarray indices: %i, %i\n", bestTotalIndices.start, bestTotalIndices.end);
 	printf("Values at those indices: %i, %i\n", arr[bestTotalIndices.start], arr[bestTotalIndices.end]);
 
+	return bestTotalIndices;
+}
+
+
+void printSubArray(struct subArrIndices indices, int array[])
+{
+	printf("[");
+	for (int i = indices.start; i <= indices.end; i++)
+	{
+		printf("%i,", array[i]);
+	}
+	printf("]\n");
 }
 
 
