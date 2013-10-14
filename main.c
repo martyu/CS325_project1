@@ -74,9 +74,9 @@ struct subArrIndices closeToZero1(int arr[])
 			indices.end = j;
 
 			int total = 0;
-			for (int i = indices.start; i <= indices.end; i++)
+			for (int k = indices.start; k <= indices.end; k++)
 			{
-				total += arr[i];
+				total += arr[k];
 			}
 
 			if (abs(total) < abs(bestTotal))
