@@ -130,7 +130,20 @@ struct subArrIndices closeToZero2(int arr[])
 	{
 		int total = arr[i];
 
-		for (int j = i; j < 100; j++)
+		if (abs(total) < abs(bestTotal))
+		{
+			bestTotal = total;
+
+			bestTotalIndices.start = i;
+			bestTotalIndices.end = i;
+
+			if (bestTotal == 0)
+			{
+				goto end_loop;
+			}
+		}
+
+		for (int j = i+1; j < 100; j++)
 		{
 			total += arr[j];
 
