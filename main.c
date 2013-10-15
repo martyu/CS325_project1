@@ -51,6 +51,7 @@ int main(int argc, const char * argv[])
 		{-487,-625,-72,-311,819,70,560,5,-643,138,564,117,-762,-952,-972,629,-622,238,-888,258,-858,-584,66,558,-446,146,132,-229,-131,322,-858,197,-538,-240,-834,671,-588,-148,-472,-502,-452,98,-950,371,-473,707,-593,363,896,275,-230,-309,-22,875,899,292,-914,-787,435,-477,-505,166,65,-29,339,977,-350,-883,427,-513,-685,341,-524,752,-515,-946,-167,644,-692,-155,-1,124,-536,743,-745,192,21,161,640,604,702,-504,-936,704,361,-843,927,247,863,-526},
 	};
 
+	printf("\nPROBLEMS USING ALGORITHM 1:\n\n");
 	for (int i = 0; i < NUM_OF_TEST_ARRAYS; i++)
 	{
 		struct subArrIndices problemAnswerIndices = closeToZero1(closeToZeroProblems[i], TEST_ARRAY_SIZE);
@@ -61,6 +62,19 @@ int main(int argc, const char * argv[])
 		printSubArray(problemAnswerIndices, closeToZeroProblems[i]);
 		printf(", %i\n", sumOfSubArray(problemAnswerIndices, closeToZeroProblems[i]));
 	}
+
+	printf("\n\nPROBLEMS USING ALGORITHM 2:\n\n");
+	for (int i = 0; i < NUM_OF_TEST_ARRAYS; i++)
+	{
+		struct subArrIndices problemAnswerIndices = closeToZero2(closeToZeroProblems[i], TEST_ARRAY_SIZE);
+		struct subArrIndices wholeArrIndices = {0, TEST_ARRAY_SIZE};
+
+		printSubArray(wholeArrIndices, closeToZeroProblems[i]);
+		printf(", ");
+		printSubArray(problemAnswerIndices, closeToZeroProblems[i]);
+		printf(", %i\n", sumOfSubArray(problemAnswerIndices, closeToZeroProblems[i]));
+	}
+
 
 	return 0;
 }
