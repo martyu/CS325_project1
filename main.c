@@ -22,8 +22,8 @@ struct algorithmRuntimes
 	double algorithm2;
 };
 
-struct subArrIndices closeToZero1(int arr[]);
-struct subArrIndices closeToZero2(int arr[]);
+struct subArrIndices closeToZero1(int arr[], int arrSize);
+struct subArrIndices closeToZero2(int arr[], int arrSize);
 void printSubArray(struct subArrIndices indices, int array[]);
 struct algorithmRuntimes executeAlgorithms(int arraySize);
 void printRuntime(struct algorithmRuntimes runtimes, int arraySize);
@@ -46,6 +46,23 @@ int main(int argc, const char * argv[])
 
 		printRuntime(avgRuntime, arraySize);
 	}
+
+	for (int arraySize = 1000; arraySize <= 9000; arraySize += 1000)
+	{
+		struct algorithmRuntimes avgRuntime = {0.0, 0.0};
+		for (int testNumber = 0; testNumber < 10; testNumber++)
+		{
+			struct algorithmRuntimes currentRuntime = executeAlgorithms(arraySize);
+			avgRuntime.algorithm1 += currentRuntime.algorithm1;
+			avgRuntime.algorithm2 += currentRuntime.algorithm2;
+		}
+
+		avgRuntime.algorithm1 /= (double)10.0;
+		avgRuntime.algorithm2 /= (double)10.0;
+
+		printRuntime(avgRuntime, arraySize);
+	}
+
 }
 
 struct algorithmRuntimes executeAlgorithms(int arraySize)
@@ -65,17 +82,20 @@ struct algorithmRuntimes executeAlgorithms(int arraySize)
 
 	// Algorithm 1
 
-	startTime = clock();
-	closeToZeroIndices = closeToZero1(arr);
-	endTime = clock();
+	if (arraySize <= 900)
+	{
+		startTime = clock();
+		closeToZeroIndices = closeToZero1(arr, arraySize);
+		endTime = clock();
 
-	runTimes.algorithm1 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
+		runTimes.algorithm1 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
+	}
 
 
 	// Algorithm 2
 
 	startTime = clock();
-	closeToZeroIndices = closeToZero2(arr);
+	closeToZeroIndices = closeToZero2(arr, arraySize);
 	endTime = clock();
 
 	runTimes.algorithm2 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
@@ -83,15 +103,15 @@ struct algorithmRuntimes executeAlgorithms(int arraySize)
 	return runTimes;
 }
 
-struct subArrIndices closeToZero1(int arr[])
+struct subArrIndices closeToZero1(int arr[], int arrSize)
 {
 	int bestTotal = INT_MAX;
 	struct subArrIndices indices;
 	struct subArrIndices bestTotalIndices;
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < arrSize; i++)
 	{
-		for (int j = i; j < 100; j++)
+		for (int j = i; j < arrSize; j++)
 		{
 			indices.start = i;
 			indices.end = j;
@@ -122,12 +142,12 @@ end_loop:
 	return bestTotalIndices;
 }
 
-struct subArrIndices closeToZero2(int arr[])
+struct subArrIndices closeToZero2(int arr[], int arrSize)
 {
 	int bestTotal = INT_MAX;
 	struct subArrIndices bestTotalIndices;
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < arrSize; i++)
 	{
 		int total = arr[i];
 
@@ -144,7 +164,7 @@ struct subArrIndices closeToZero2(int arr[])
 			}
 		}
 
-		for (int j = i+1; j < 100; j++)
+		for (int j = i+1; j < arrSize; j++)
 		{
 			total += arr[j];
 
