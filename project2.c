@@ -14,6 +14,10 @@
 #include "project2.h"
 #include "project1.h"
 
+
+struct algorithmRuntimes _executeAlgorithms(int arraySize);
+void _checkRuntimes();
+
 #define TEST_ARRAY_SIZE 100
 #define NUM_OF_TEST_ARRAYS 10
 
@@ -36,15 +40,85 @@ int main_project2(int argc, const char * argv[])
 		{-487,-625,-72,-311,819,70,560,5,-643,138,564,117,-762,-952,-972,629,-622,238,-888,258,-858,-584,66,558,-446,146,132,-229,-131,322,-858,197,-538,-240,-834,671,-588,-148,-472,-502,-452,98,-950,371,-473,707,-593,363,896,275,-230,-309,-22,875,899,292,-914,-787,435,-477,-505,166,65,-29,339,977,-350,-883,427,-513,-685,341,-524,752,-515,-946,-167,644,-692,-155,-1,124,-536,743,-745,192,21,161,640,604,702,-504,-936,704,361,-843,927,247,863,-526},
 	};
 
-
-	printf("algorithm 1: %i\n", algorithm2(arr1, 8, arr2, 7));
-	printf("algorithm 2: %i\n", algorithm2(arr1, 8, arr2, 7));
-	printf("algorithm 3: %i\n", algorithm3(closeToZeroProblems[3], TEST_ARRAY_SIZE));
-	printf("algorithm 4: %i\n", algorithm4(closeToZeroProblems[3], TEST_ARRAY_SIZE));
+	_checkRuntimes();
 
 	return 0;
 }
 
+void _checkRuntimes()
+{
+	for (int arraySize = 100; arraySize <= 900; arraySize += 100)
+	{
+		struct algorithmRuntimes avgRuntime = {0.0, 0.0};
+		for (int testNumber = 0; testNumber < 10; testNumber++)
+		{
+			struct algorithmRuntimes currentRuntime = _executeAlgorithms(arraySize);
+			avgRuntime.algorithm1 += currentRuntime.algorithm1;
+			avgRuntime.algorithm2 += currentRuntime.algorithm2;
+		}
+
+		avgRuntime.algorithm1 /= (double)10.0;
+		avgRuntime.algorithm2 /= (double)10.0;
+
+		printRuntime(avgRuntime, arraySize);
+	}
+
+	for (int arraySize = 1000; arraySize <= 9000; arraySize += 1000)
+	{
+		struct algorithmRuntimes avgRuntime = {0.0, 0.0};
+		for (int testNumber = 0; testNumber < 10; testNumber++)
+		{
+			struct algorithmRuntimes currentRuntime = _executeAlgorithms(arraySize);
+			avgRuntime.algorithm1 += currentRuntime.algorithm1;
+			avgRuntime.algorithm2 += currentRuntime.algorithm2;
+		}
+
+		avgRuntime.algorithm1 /= (double)10.0;
+		avgRuntime.algorithm2 /= (double)10.0;
+
+		printRuntime(avgRuntime, arraySize);
+	}
+}
+
+struct algorithmRuntimes _executeAlgorithms(int arraySize)
+{
+	int arr[arraySize];
+	struct algorithmRuntimes runTimes;
+
+	for (int i = 0; i < arraySize; i++)
+	{
+		arr[i] = arc4random();
+	}
+
+	clock_t startTime;
+	clock_t endTime;
+	int closestToZero1;
+	int closestToZero2;
+
+	// Algorithm 1
+
+	//	if (arraySize <= 900)
+	{
+		startTime = clock();
+		closestToZero1 = algorithm3(arr, arraySize);
+		endTime = clock();
+
+		runTimes.algorithm1 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
+	}
+
+
+	// Algorithm 2
+
+	startTime = clock();
+	closestToZero2 = algorithm4(arr, arraySize);
+	endTime = clock();
+
+	runTimes.algorithm2 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
+
+	return runTimes;
+}
+
+#pragma mark Algorithms
 
 int algorithm1(int arr1[], int sizeOfArr1, int arr2[], int sizeOfArr2)
 {
