@@ -1,0 +1,31 @@
+Algorithm 1:
+
+for i = 0:size_of_array
+	for j = i:size_of_array
+		for k = i:j
+			add array[k] to running_total
+		if abs(running_total) < abs(current_closest_total)
+			current_closest_total = running_total
+			if current_closest_total == 0
+				return current_closest_total
+return current_closest_total
+
+Since the algorithm has three for-loops nested in each other, the Big O runtime is N^3.  Also, the slope of the log-log plot is approximately m = 3.  Coincidence?  We think not.
+
+Algorithm 2:
+
+for i = 0:size_of_array
+	running_total = array[i]
+	if abs(running_total) < abs(current_closest_total)
+		if running_total == 0
+			return running_total
+		current_closest_total = running_total
+	for j = i+1:size_of_array
+		add arr[j] to running_total
+		if abs(running_total) < abs(current_closest_total)
+			if running_total == 0
+				return running_total
+			current_closest_total = running_total
+return current_closest_total
+
+Since this algorithm only has two for-loops, the Big O runtime is N^2.  The slope of this log-log plot is approximately m = 2.
