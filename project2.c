@@ -156,7 +156,7 @@ void checkRuntimes1()
 			avgRuntime.algorithm1 += currentRuntime.algorithm1;
 			avgRuntime.algorithm2 += currentRuntime.algorithm2;
 			avgRuntime.algorithm3 += currentRuntime.algorithm3;
-			avgRuntime.algorithm4 += currentRuntime.algorithm3;
+			avgRuntime.algorithm4 += currentRuntime.algorithm4;
 		}
 
 		avgRuntime.algorithm1 /= (double)10.0;
