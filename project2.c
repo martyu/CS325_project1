@@ -17,6 +17,7 @@
 
 struct algorithmRuntimes _executeAlgorithms(int arraySize);
 void _checkRuntimes();
+int algorithm3And4(int arr[], int sizeOfArr, bool algorithm3);
 
 #define TEST_ARRAY_SIZE 100
 #define NUM_OF_TEST_ARRAYS 10
@@ -56,11 +57,10 @@ int main_project2(int argc, const char * argv[])
 		halfArr_2[j] = arr1[i];
 	}
 
-
-	printf("close to zero: %i\n\n", closeToZero2(closeToZeroProblems[3], TEST_ARRAY_SIZE));
-//	printf("close to zero first half: %i\n\n", closeToZero2(halfArr_1, 4));
-//	printf("close to zero second half: %i\n\n", closeToZero2(halfArr_2, 4));
-	printf("algorithm 3: %i\n", algorithm3(closeToZeroProblems[3], TEST_ARRAY_SIZE));
+	int problem = 0;
+	printf("close to zero: %i\n\n", closeToZero2(closeToZeroProblems[problem], TEST_ARRAY_SIZE));
+	printf("algorithm 3: %i\n", algorithm3And4(closeToZeroProblems[problem], TEST_ARRAY_SIZE, true));
+	printf("algorithm 4: %i\n", algorithm3And4(closeToZeroProblems[problem], TEST_ARRAY_SIZE, false));
 
 	return 0;
 }
@@ -120,7 +120,7 @@ struct algorithmRuntimes _executeAlgorithms(int arraySize)
 	//	if (arraySize <= 900)
 	{
 		startTime = clock();
-		closestToZero1 = algorithm3(arr, arraySize);
+		closestToZero1 = algorithm3And4(arr, arraySize, true);
 		endTime = clock();
 
 		runTimes.algorithm1 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
@@ -130,7 +130,7 @@ struct algorithmRuntimes _executeAlgorithms(int arraySize)
 	// Algorithm 2
 
 	startTime = clock();
-	closestToZero2 = algorithm4(arr, arraySize);
+	closestToZero2 = algorithm3And4(arr, arraySize, false);
 	endTime = clock();
 
 	runTimes.algorithm2 = (double)(endTime - startTime) / (double)CLOCKS_PER_SEC;
@@ -221,7 +221,7 @@ int algorithm2(int arr1[], int sizeOfArr1, int arr2[], int sizeOfArr2)
 	return closestSumToZero;
 }
 
-int algorithm3(int arr[], int sizeOfArr)
+int algorithm3And4(int arr[], int sizeOfArr, bool algorithm3)
 {
 	if (sizeOfArr == 1)
 		return arr[0];
@@ -252,11 +252,15 @@ int algorithm3(int arr[], int sizeOfArr)
 	}
 
 	// recurse on each half, save result
-	int closestToZero1 = algorithm3(halfArr_1, sizeOfArr/2);
-	int closestToZero2 = algorithm3(halfArr_2, sizeOfArr - sizeOfArr/2);
+	int closestToZero1 = algorithm3And4(halfArr_1, sizeOfArr/2, algorithm3);
+	int closestToZero2 = algorithm3And4(halfArr_2, sizeOfArr - sizeOfArr/2, algorithm3);
 
 	// get smallest sum of each half combined
-	int sumOfSuffices = algorithm1(halfArr_1, halfArr1_size, halfArr_2_backwards, halfArr2_size);
+	int sumOfSuffices;
+	if (algorithm3)
+		sumOfSuffices = algorithm1(halfArr_1, halfArr1_size, halfArr_2_backwards, halfArr2_size);
+	else
+		sumOfSuffices = algorithm2(halfArr_1, halfArr1_size, halfArr_2_backwards, halfArr2_size);
 
 	if (abs(closestToZero1) < abs(closestToZero2) && abs(closestToZero1) < abs(sumOfSuffices))
 	{
@@ -273,45 +277,6 @@ int algorithm3(int arr[], int sizeOfArr)
 
 }
 
-int algorithm4(int arr[], int sizeOfArr)
-{
-	// split array into two halves
-	int *halfArr_1 = (int*)malloc(sizeof(int) * sizeOfArr/2);
-	int oddMakeup;
-	if (sizeOfArr % 2 == 0)
-		oddMakeup = 0;
-	else
-		oddMakeup = 1;
-
-	int *halfArr_2 = (int*)malloc(sizeof(int) * (sizeOfArr/2 + oddMakeup));
-	int *halfArr_2_backwards = (int*)malloc(sizeof(int) * (sizeOfArr/2 + oddMakeup));
-
-	for(int i = 0; i < sizeOfArr/2; i++)
-	{
-		halfArr_1[i] = arr[i];
-	}
-
-	for(int i = sizeOfArr/2, j = 0; i < sizeOfArr; i++, j++)
-	{
-		halfArr_2[j] = arr[i];
-	}
-
-	for (int i = (sizeOfArr/2+oddMakeup)-1, j = 0; i >= 0; i--, j++)
-	{
-		halfArr_2_backwards[j] = halfArr_2[i];
-	}
-
-	int closestToZeroFirstHalf = closeToZero2(halfArr_1, sizeOfArr/2);
-	int closestToZeroSecondHalf = closeToZero2(halfArr_2, sizeOfArr/2+oddMakeup);
-	int closestToZeroJointHalves = algorithm2(halfArr_1, sizeOfArr/2, halfArr_2_backwards, sizeOfArr/2+oddMakeup);
-
-	if (abs(closestToZeroFirstHalf) < abs(closestToZeroSecondHalf) && abs(closestToZeroFirstHalf) < abs(closestToZeroJointHalves))
-		return closestToZeroFirstHalf;
-	else if (abs(closestToZeroSecondHalf) < abs(closestToZeroJointHalves))
-		return closestToZeroSecondHalf;
-	else
-		return closestToZeroJointHalves;
-}
 
 #pragma mark Helper functions
 

@@ -14,8 +14,6 @@
 int main_project2(int argc, const char * argv[]);
 int algorithm1(int arr1[], int sizeOfArr1, int arr2[], int sizeOfArr2);
 int algorithm2(int arr1[], int sizeOfArr1, int arr2[], int sizeOfArr2);
-int algorithm3(int arr[], int sizeOfArr);
-int algorithm4(int arr[], int sizeOfArr);
 struct indices makeIndices(int index1, int index2);
 int computeSumOfSubArray(int arr[], struct indices subArrIndices);
 int compare(const void * item1, const void * item2);
