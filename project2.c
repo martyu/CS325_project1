@@ -23,7 +23,7 @@ void _checkRuntimes();
 
 int main_project2(int argc, const char * argv[])
 {
-	int arr1[] = {59, 26, -53, 58, -6, 97, -93, -23};
+	int arr1[] = {31, -41, 59, 26, -53, 58, -6, 97, -93, -23, 84};
 	int arr2[] = {9, -74, 68, 4, 100, 67, 95};
 	int arr3[] = {59, 26, -53, 58, -6, 97, -93, -23, 9, -74, 68, 4, 100, 67, 95};
 
@@ -40,7 +40,27 @@ int main_project2(int argc, const char * argv[])
 		{-487,-625,-72,-311,819,70,560,5,-643,138,564,117,-762,-952,-972,629,-622,238,-888,258,-858,-584,66,558,-446,146,132,-229,-131,322,-858,197,-538,-240,-834,671,-588,-148,-472,-502,-452,98,-950,371,-473,707,-593,363,896,275,-230,-309,-22,875,899,292,-914,-787,435,-477,-505,166,65,-29,339,977,-350,-883,427,-513,-685,341,-524,752,-515,-946,-167,644,-692,-155,-1,124,-536,743,-745,192,21,161,640,604,702,-504,-936,704,361,-843,927,247,863,-526},
 	};
 
-	_checkRuntimes();
+	// split array into two halves
+	int halfArr_1[5];
+	int halfArr_2[6];
+
+	// make first half
+	for(int i = 0; i < 5; i++)
+	{
+		halfArr_1[i] = arr1[i];
+	}
+
+	// make second half
+	for(int i = 5, j = 0; i < 11; i++, j++)
+	{
+		halfArr_2[j] = arr1[i];
+	}
+
+
+	printf("close to zero: %i\n\n", closeToZero2(closeToZeroProblems[3], TEST_ARRAY_SIZE));
+//	printf("close to zero first half: %i\n\n", closeToZero2(halfArr_1, 4));
+//	printf("close to zero second half: %i\n\n", closeToZero2(halfArr_2, 4));
+	printf("algorithm 3: %i\n", algorithm3(closeToZeroProblems[3], TEST_ARRAY_SIZE));
 
 	return 0;
 }
@@ -134,7 +154,7 @@ int algorithm1(int arr1[], int sizeOfArr1, int arr2[], int sizeOfArr2)
 
 			int sumOfSuffices = subArr1Total + subArr2Total;
 
-			if (sumOfSuffices < closestSumToZero)
+			if (abs(sumOfSuffices) < abs(closestSumToZero))
 			{
 				closestSumToZero = sumOfSuffices;
 			}
@@ -203,42 +223,54 @@ int algorithm2(int arr1[], int sizeOfArr1, int arr2[], int sizeOfArr2)
 
 int algorithm3(int arr[], int sizeOfArr)
 {
+	if (sizeOfArr == 1)
+		return arr[0];
+
 	// split array into two halves
-	int *halfArr_1 = (int*)malloc(sizeof(int) * sizeOfArr/2);
-	int oddMakeup;
-	if (sizeOfArr % 2 == 0)
-		oddMakeup = 0;
-	else
-		oddMakeup = 1;
+	int halfArr1_size = sizeOfArr/2;
+	int halfArr2_size = sizeOfArr - sizeOfArr/2;
+	int *halfArr_2_backwards = (int*)malloc(sizeof(int) * halfArr2_size);
+	int *halfArr_1 = (int*)malloc(sizeof(int) * halfArr1_size);
+	int *halfArr_2 = (int*)malloc(sizeof(int) * halfArr2_size);
 
-	int *halfArr_2 = (int*)malloc(sizeof(int) * (sizeOfArr/2 + oddMakeup));
-	int *halfArr_2_backwards = (int*)malloc(sizeof(int) * (sizeOfArr/2 + oddMakeup));
+	// make backwards second half
+	for(int i = sizeOfArr-1, j = 0; i >= sizeOfArr/2; i--, j++)
+	{
+		halfArr_2_backwards[j] = arr[i];
+	}
 
+	// make first half
 	for(int i = 0; i < sizeOfArr/2; i++)
 	{
 		halfArr_1[i] = arr[i];
 	}
 
+	// make second half
 	for(int i = sizeOfArr/2, j = 0; i < sizeOfArr; i++, j++)
 	{
 		halfArr_2[j] = arr[i];
 	}
 
-	for (int i = (sizeOfArr/2+oddMakeup)-1, j = 0; i >= 0; i--, j++)
+	// recurse on each half, save result
+	int closestToZero1 = algorithm3(halfArr_1, sizeOfArr/2);
+	int closestToZero2 = algorithm3(halfArr_2, sizeOfArr - sizeOfArr/2);
+
+	// get smallest sum of each half combined
+	int sumOfSuffices = algorithm1(halfArr_1, halfArr1_size, halfArr_2_backwards, halfArr2_size);
+
+	if (abs(closestToZero1) < abs(closestToZero2) && abs(closestToZero1) < abs(sumOfSuffices))
 	{
-		halfArr_2_backwards[j] = halfArr_2[i];
+		return closestToZero1;
+	}
+	else if (abs(closestToZero2) < abs(sumOfSuffices))
+	{
+		return closestToZero2;
+	}
+	else
+	{
+		return sumOfSuffices;
 	}
 
-	int closestToZeroFirstHalf = closeToZero2(halfArr_1, sizeOfArr/2);
-	int closestToZeroSecondHalf = closeToZero2(halfArr_2, sizeOfArr/2+oddMakeup);
-	int closestToZeroJointHalves = algorithm1(halfArr_1, sizeOfArr/2, halfArr_2_backwards, sizeOfArr/2+oddMakeup);
-
-	if (abs(closestToZeroFirstHalf) < abs(closestToZeroSecondHalf) && abs(closestToZeroFirstHalf) < abs(closestToZeroJointHalves))
-		return closestToZeroFirstHalf;
-	else if (abs(closestToZeroSecondHalf) < abs(closestToZeroJointHalves))
-		return closestToZeroSecondHalf;
-	else
-		return closestToZeroJointHalves;
 }
 
 int algorithm4(int arr[], int sizeOfArr)
