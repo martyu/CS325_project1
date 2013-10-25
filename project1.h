@@ -19,6 +19,8 @@ struct algorithmRuntimes
 {
 	double algorithm1;
 	double algorithm2;
+	double algorithm3;
+	double algorithm4;
 };
 
 int closeToZero1(int arr[], int arrSize);

@@ -1,3 +1,8 @@
+
+
+********PROJECT 1:**********
+
+
 Average runtime for algorithm 1 with array size 100: 0.000565
 Average runtime for algorithm 2 with array size 100: 0.000042
 
@@ -90,3 +95,82 @@ Average runtime for algorithm 2 with array size 9000: 0.292505
 0.231629
 0.000000
 0.292505
+
+
+
+
+
+********PROJECT 2:**********
+
+
+Average runtime for algorithm 1 with array size 100: 0.000278
+Average runtime for algorithm 2 with array size 100: 0.000027
+Average runtime for algorithm 3 with array size 100: 0.000457
+Average runtime for algorithm 4 with array size 100: 0.000457
+
+Average runtime for algorithm 1 with array size 200: 0.001883
+Average runtime for algorithm 2 with array size 200: 0.000065
+Average runtime for algorithm 3 with array size 200: 0.002771
+Average runtime for algorithm 4 with array size 200: 0.002771
+
+Average runtime for algorithm 1 with array size 300: 0.006061
+Average runtime for algorithm 2 with array size 300: 0.001457
+Average runtime for algorithm 3 with array size 300: 0.008724
+Average runtime for algorithm 4 with array size 300: 0.008724
+
+Average runtime for algorithm 1 with array size 400: 0.013895
+Average runtime for algorithm 2 with array size 400: 0.001609
+Average runtime for algorithm 3 with array size 400: 0.018980
+Average runtime for algorithm 4 with array size 400: 0.018980
+
+Average runtime for algorithm 1 with array size 500: 0.025519
+Average runtime for algorithm 2 with array size 500: 0.001406
+Average runtime for algorithm 3 with array size 500: 0.037013
+Average runtime for algorithm 4 with array size 500: 0.037013
+
+Average runtime for algorithm 1 with array size 600: 0.044663
+Average runtime for algorithm 2 with array size 600: 0.000392
+Average runtime for algorithm 3 with array size 600: 0.060615
+Average runtime for algorithm 4 with array size 600: 0.060615
+
+Average runtime for algorithm 1 with array size 700: 0.070597
+Average runtime for algorithm 2 with array size 700: 0.000525
+Average runtime for algorithm 3 with array size 700: 0.095012
+Average runtime for algorithm 4 with array size 700: 0.095012
+
+Average runtime for algorithm 1 with array size 800: 0.104731
+Average runtime for algorithm 2 with array size 800: 0.000639
+Average runtime for algorithm 3 with array size 800: 0.141800
+Average runtime for algorithm 4 with array size 800: 0.141800
+
+Average runtime for algorithm 1 with array size 900: 0.143683
+Average runtime for algorithm 2 with array size 900: 0.000786
+Average runtime for algorithm 3 with array size 900: 0.198698
+Average runtime for algorithm 4 with array size 900: 0.198698
+
+Average runtime for algorithm 2 with array size 1000: 0.000919
+Average runtime for algorithm 4 with array size 1000: 0.004752
+
+Average runtime for algorithm 2 with array size 2000: 0.003342
+Average runtime for algorithm 4 with array size 2000: 0.013404
+
+Average runtime for algorithm 2 with array size 3000: 0.007264
+Average runtime for algorithm 4 with array size 3000: 0.023220
+
+Average runtime for algorithm 2 with array size 4000: 0.012856
+Average runtime for algorithm 4 with array size 4000: 0.038767
+
+Average runtime for algorithm 2 with array size 5000: 0.019374
+Average runtime for algorithm 4 with array size 5000: 0.054831
+
+Average runtime for algorithm 2 with array size 6000: 0.027263
+Average runtime for algorithm 4 with array size 6000: 0.074519
+
+Average runtime for algorithm 2 with array size 7000: 0.037886
+Average runtime for algorithm 4 with array size 7000: 0.100025
+
+Average runtime for algorithm 2 with array size 8000: 0.049065
+Average runtime for algorithm 4 with array size 8000: 0.131113
+
+Average runtime for algorithm 2 with array size 9000: 0.062855
+Average runtime for algorithm 4 with array size 9000: 0.172097

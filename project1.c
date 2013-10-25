@@ -298,8 +298,13 @@ void printSubArray(struct subArrIndices indices, int array[])
 
 void printRuntime(struct algorithmRuntimes runtimes, int arraySize)
 {
-	printf("Average runtime for algorithm 1 with array size %i: %lf\n", arraySize, runtimes.algorithm1);
-	printf("Average runtime for algorithm 2 with array size %i: %lf\n\n", arraySize, runtimes.algorithm2);
+	if (arraySize <= 900)
+		printf("Average runtime for algorithm 1 with array size %i: %lf\n", arraySize, runtimes.algorithm1);
+	printf("Average runtime for algorithm 2 with array size %i: %lf\n", arraySize, runtimes.algorithm2);
+
+	if (arraySize <= 900)
+		printf("Average runtime for algorithm 3 with array size %i: %lf\n", arraySize, runtimes.algorithm3);
+	printf("Average runtime for algorithm 4 with array size %i: %lf\n\n", arraySize, runtimes.algorithm4);
 }
 
 int sumOfArray(int arr[], int arrSize)
